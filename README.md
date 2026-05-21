@@ -1,59 +1,307 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Calculadora de Médias Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Projeto desenvolvido para a **Atividade 3 - Calculadora de Médias Laravel**.
 
-## About Laravel
+O objetivo do sistema é cadastrar turmas, cadastrar alunos, lançar quatro notas, calcular a média automaticamente, exibir a situação do aluno e permitir o lançamento de nota de recuperação quando necessário.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+O projeto foi desenvolvido utilizando **Laravel, PHP, MySQL e Bootstrap**.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Funcionalidades
 
-## Learning Laravel
+- Cadastro de turmas
+- Edição de turmas
+- Exclusão de turmas
+- Fechamento de turmas
+- Reabertura de turmas
+- Cadastro de alunos
+- Edição de alunos
+- Exclusão de alunos
+- Alunos vinculados a uma turma
+- Lançamento de quatro notas por aluno
+- Cálculo automático da média
+- Exibição da mensagem de acordo com a média
+- Recuperação para alunos que se enquadram nessa situação
+- Cálculo da recuperação
+- Salvamento das notas para edição futura
+- Bloqueio de alterações quando a turma estiver fechada
+- Consulta dos alunos e resultados mesmo com a turma fechada
+- Interface visual utilizando Bootstrap
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Regras do Sistema
 
-## Laravel Sponsors
+O sistema lê quatro notas do aluno e calcula a média final.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+A média é calculada da seguinte forma:
 
-### Premium Partners
+```text
+(nota1 + nota2 + nota3 + nota4) / 4
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+De acordo com a média, o sistema exibe uma mensagem para o aluno:
 
-## Contributing
+| Média | Mensagem |
+|------|----------|
+| Acima de 9 | Aprovado com Louvor |
+| Acima de 7 | Aluno Aprovado |
+| Acima de 4 | Recuperação, sua chance de passar |
+| Demais médias | Poxa vida, vamos tentar novamente ano que vem |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## Regra da Recuperação
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Para alunos em recuperação, o sistema permite lançar uma nota de recuperação.
 
-## Security Vulnerabilities
+O aluno será aprovado na recuperação quando:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```text
+média + nota da recuperação >= 10
+```
 
-## License
+Exemplo:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```text
+Média: 5,0
+Nota da recuperação: 7,3
+Resultado: 12,3
+Situação: Aprovado na recuperação
+```
+
+Outro exemplo:
+
+```text
+Média: 4,8
+Nota da recuperação: 5,0
+Resultado: 9,8
+Situação: Reprovado na recuperação
+```
+
+---
+
+## Tecnologias Utilizadas
+
+- PHP
+- Laravel
+- MySQL
+- Blade
+- Bootstrap
+- XAMPP
+- Composer
+- Git e GitHub
+
+---
+
+## Estrutura do Projeto
+
+```text
+app/
+ ├── Http/
+ │   └── Controllers/
+ │       ├── TurmaController.php
+ │       ├── AlunoController.php
+ │       └── NotaController.php
+ │
+ └── Models/
+     ├── Turma.php
+     ├── Aluno.php
+     └── Nota.php
+
+database/
+ └── migrations/
+     ├── create_turmas_table.php
+     ├── create_alunos_table.php
+     └── create_notas_table.php
+
+resources/
+ └── views/
+     ├── layouts/
+     │   └── app.blade.php
+     ├── turmas/
+     ├── alunos/
+     └── notas/
+
+routes/
+ └── web.php
+```
+
+---
+
+## Principais Telas
+
+O sistema possui as seguintes telas:
+
+- Listagem de turmas
+- Cadastro de turma
+- Edição de turma
+- Listagem de alunos por turma
+- Cadastro de aluno
+- Edição de aluno
+- Lançamento de notas
+- Resultado do aluno
+- Recuperação do aluno
+
+---
+
+## Controle de Turmas
+
+Cada turma pode estar em dois estados:
+
+| Status | Descrição |
+|--------|-----------|
+| Aberta | Permite cadastrar, editar e excluir dados |
+| Fechada | Permite apenas consulta dos dados |
+
+Quando a turma é fechada, o sistema bloqueia alterações nos alunos e nas notas.
+
+Também foi implementada a opção de **reabrir turma**, caso o fechamento tenha sido feito por engano.
+
+---
+
+## Como Executar o Projeto
+
+### 1. Clonar o repositório
+
+```bash
+git clone LINK_DO_REPOSITORIO
+```
+
+### 2. Entrar na pasta do projeto
+
+```bash
+cd calculadora-medias
+```
+
+### 3. Instalar as dependências
+
+```bash
+composer install
+```
+
+### 4. Copiar o arquivo de configuração
+
+```bash
+copy .env.example .env
+```
+
+### 5. Gerar a chave da aplicação
+
+```bash
+php artisan key:generate
+```
+
+### 6. Criar o banco de dados
+
+No phpMyAdmin, crie um banco com o nome:
+
+```text
+calculadora_medias
+```
+
+### 7. Configurar o arquivo `.env`
+
+No arquivo `.env`, configure o banco de dados:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=calculadora_medias
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Caso o MySQL tenha senha, preencha o campo:
+
+```env
+DB_PASSWORD=sua_senha
+```
+
+### 8. Rodar as migrations
+
+```bash
+php artisan migrate
+```
+
+### 9. Iniciar o servidor
+
+```bash
+php artisan serve
+```
+
+### 10. Acessar o sistema
+
+Abra no navegador:
+
+```text
+http://127.0.0.1:8000
+```
+
+---
+
+## Como Usar o Sistema
+
+1. Cadastre uma turma.
+2. Acesse a opção de alunos da turma.
+3. Cadastre os alunos.
+4. Lance as quatro notas do aluno.
+5. O sistema calculará a média automaticamente.
+6. O resultado será exibido com a mensagem correspondente.
+7. Caso o aluno esteja em recuperação, será exibido o formulário para lançar a nota de recuperação.
+8. Após finalizar os lançamentos, é possível fechar a turma.
+9. Com a turma fechada, os dados ficam apenas para consulta.
+
+---
+
+## Validações Implementadas
+
+- As notas devem estar entre 0 e 10.
+- O aluno deve pertencer a uma turma.
+- Turmas fechadas não permitem alterações.
+- Cada aluno possui apenas um registro de notas.
+- A recuperação só é permitida para alunos que precisam dela.
+- Não é possível alterar notas de uma turma fechada.
+
+---
+
+## Comandos Úteis
+
+Limpar cache de configuração:
+
+```bash
+php artisan config:clear
+```
+
+Limpar cache das views:
+
+```bash
+php artisan view:clear
+```
+
+Listar rotas:
+
+```bash
+php artisan route:list
+```
+
+Rodar migrations novamente apagando os dados:
+
+```bash
+php artisan migrate:fresh
+```
+
+---
+
+## Desenvolvedores
+
+- Felipe Motta
+- Gabriel Denke Machado
+
+---
+
+## Observação
+
+A interface foi construída com Bootstrap para melhorar a apresentação dos formulários, tabelas, cards e resultados.
